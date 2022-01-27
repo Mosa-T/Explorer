@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
+
 import com.jcraft.jsch.*;
 
 public class FileExplore {
@@ -21,6 +24,7 @@ public class FileExplore {
         Session session = null;
         ChannelSftp channel = null;
         System.out.println("Agent:- Attempting to connect");
+
         try {
             session = new JSch().getSession(username, host, port);
             session.setPassword(password);
@@ -33,14 +37,29 @@ public class FileExplore {
             channel.connect();
             System.out.println("Agent:- Established sftp channel");
 
-            channel.cd(directory);
-            List<ChannelSftp.LsEntry> content = channel.ls(directory);
-            System.out.println("Agent:- File data transferred through channel");
+            Stack<String> stack = new Stack<String>();
+            stack.push(directory);
+            String full_dir;
+            System.out.println("Agent:- File data transferring through channel");
 
-            for(var i:content){
-                System.out.println(i.getFilename());
+            System.out.println("Root directory:- " + directory);
+            while(!stack.isEmpty()){
+                //System.out.println("POPPING  "+ stack.peek());
+                full_dir = stack.peek();
+                directory = stack.pop();
+                channel.cd(directory);
+                List<ChannelSftp.LsEntry> content = channel.ls(directory);
+                for(var i : content){
+                    if(i.getAttrs().isDir() && !i.getFilename().equals(".") && !i.getFilename().equals("..")){
+                        //System.out.println("PUSHING  " + directory + i.getFilename());
+                        stack.push(directory+i.getFilename()+"/");
+                        System.out.println(stack.peek());
+                    } else if(!i.getFilename().equals(".") && !i.getFilename().equals("..")) { //if(i.getAttrs().isReg())
+                        System.out.println(full_dir + i.getFilename());
+                    }
+                }
             }
-
+            System.out.println("Agent:- File data transferred through channel");
         } catch (JSchException e) {
             e.printStackTrace();
         } catch (SftpException e) {
@@ -57,3 +76,4 @@ public class FileExplore {
         }
     }
 }
+
