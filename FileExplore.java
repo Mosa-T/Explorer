@@ -1,5 +1,5 @@
 import java.io.File;
-
+import com.jcraft.jsch
 public class FileExplore {
 
     //Look through the files/folders, if it's a file, print it, if it's a directory, print it and recurse through it
