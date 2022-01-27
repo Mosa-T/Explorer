@@ -1,4 +1,4 @@
-import java.util.Vector;
+import java.util.List;
 import com.jcraft.jsch.*;
 
 public class FileExplore {
@@ -34,14 +34,13 @@ public class FileExplore {
             System.out.println("Agent:- Established sftp channel");
 
             channel.cd(directory);
-            Vector filelist = channel.ls(directory);
+            List<ChannelSftp.LsEntry> content = channel.ls(directory);
             System.out.println("Agent:- File data transferred through channel");
 
-            for(int i=0; i<filelist.size();i++){
-                ChannelSftp.LsEntry entry = (ChannelSftp.LsEntry) filelist.get(i);
-                System.out.println(entry.getFilename());
-                //System.out.println(filelist.get(i).toString());
+            for(var i:content){
+                System.out.println(i.getFilename());
             }
+
         } catch (JSchException e) {
             e.printStackTrace();
         } catch (SftpException e) {
