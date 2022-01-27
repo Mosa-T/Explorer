@@ -33,23 +33,24 @@ public class FileExplore {
         
         Session session = null;
         ChannelExec channel = null;
-
+        System.out.println("TRYING");
         try {
             session = new JSch().getSession(username, host, port);
             session.setPassword(password);
             session.setConfig("StrictHostKeyChecking", "no");
             session.connect();
-
+            
+            System.out.println("CONNECTED_1");
             channel = (ChannelExec) session.openChannel("exec");
             channel.setCommand(command);
             ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
             channel.setOutputStream(responseStream);
             channel.connect();
-
+            System.out.println("CONNECTED_2");
             while (channel.isConnected()) {
                 Thread.sleep(100);
             }
-
+            System.out.println("Slept");
             String responseString = new String(responseStream.toByteArray());
             System.out.println(responseString);
         } catch (InterruptedException e) {
