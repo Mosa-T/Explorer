@@ -25,7 +25,12 @@ public class FileExplore {
     //Pick a directory to explore, if it exists and is a valid directory, we will explore it.
     public static void main(String[] args) throws JSchException {
 
-        String username; String password; String host; int port; String command;
+        String username="AYYYYYY";
+        String password="123123";
+        String host="0.0.0.0";
+        int port=22;
+        String command="echo hello";
+        
         Session session = null;
         ChannelExec channel = null;
 
@@ -47,6 +52,8 @@ public class FileExplore {
 
             String responseString = new String(responseStream.toByteArray());
             System.out.println(responseString);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             if (session != null) {
                 session.disconnect();
@@ -73,4 +80,5 @@ public class FileExplore {
         }
     }
 }
+
 
