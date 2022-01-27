@@ -3,6 +3,7 @@ import com.jcraft.jsch.*;
 
 public class FileExplore {
 
+
     public static void main(String[] args)  {
 
         if(args.length != 5){
@@ -10,11 +11,12 @@ public class FileExplore {
             System.exit(0);
         }
 
-        String username="pi";
-        String password="123";
-        String host="192.168.1.110";
-        int port=22;
-        String directory="/home/pi/";
+        String username=args[0];
+        String password=args[1];
+        String directory=args[2];
+        String host=args[3];
+        int port=Integer.valueOf(args[4]);
+
         
         Session session = null;
         ChannelSftp channel = null;
