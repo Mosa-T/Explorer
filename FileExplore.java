@@ -25,11 +25,13 @@ public class FileExplore {
     //Pick a directory to explore, if it exists and is a valid directory, we will explore it.
     public static void main(String[] args)  {
 
-        String username="AYYYYYY";
-        String password="123123";
-        String host="0.0.0.0";
+        String username="pi";
+        String password="123";
+        //String host="192.162.1.110"; //or 255
+        //String host="192.168.1.0";
+        String host="192.168.1.110";
         int port=22;
-        String command="echo hello";
+        String command="ls ";
         
         Session session = null;
         ChannelExec channel = null;
@@ -83,5 +85,7 @@ public class FileExplore {
         }
     }
 }
+
+
 
 
