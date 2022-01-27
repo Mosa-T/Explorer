@@ -23,7 +23,7 @@ public class FileExplore {
         }
     }
     //Pick a directory to explore, if it exists and is a valid directory, we will explore it.
-    public static void main(String[] args) throws JSchException {
+    public static void main(String[] args)  {
 
         String username="AYYYYYY";
         String password="123123";
@@ -54,6 +54,8 @@ public class FileExplore {
             String responseString = new String(responseStream.toByteArray());
             System.out.println(responseString);
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSchException e) {
             e.printStackTrace();
         } finally {
             if (session != null) {
